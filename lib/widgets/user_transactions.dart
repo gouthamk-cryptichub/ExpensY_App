@@ -10,6 +10,7 @@ class UserTransactions extends StatefulWidget {
 }
 
 class _UserTransactionsState extends State<UserTransactions> {
+
   final List<Transaction> _userTransactions = [
     Transaction(
       id: 'exp1',
@@ -32,6 +33,7 @@ class _UserTransactionsState extends State<UserTransactions> {
       _userTransactions.add(newTx);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
