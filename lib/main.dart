@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:ExpensY_APP/transaction.dart';
 
@@ -43,7 +45,7 @@ class MyHomePage extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Card(
-              child: Text('bar chart'),
+              child: Text('BAR CHART'),
               color: Colors.blue,
               elevation: 5,
             ),
@@ -55,13 +57,35 @@ class MyHomePage extends StatelessWidget {
                   children: [
                     Container(
                       child: Text(
-                        trans.amt.toString(),
+                        'Rs.' + trans.amt.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.purple,
+                        ),
                       ),
+                      margin:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.purple,
+                          width: 2,
+                        ),
+                      ),
+                      padding: EdgeInsets.all(10),
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(trans.title),
-                        Text(trans.date.toString())
+                        Text(
+                          trans.title,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          DateFormat.yMMMEd().format( trans.date),
+                          style: TextStyle(color: Colors.grey),
+                        )
                       ],
                     )
                   ],
