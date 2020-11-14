@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ExpensY_APP/widgets/trans_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App',
+      title: 'ExpensY',
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        accentColor: Colors.deepPurple,
+        fontFamily: 'QuickSand',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              title: TextStyle(fontFamily: 'QuickSand', fontSize: 18, fontWeight: FontWeight.bold), // ignore: deprecated_member_use
+            ),
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                // ignore: deprecated_member_use
+                title: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold),
+              ),
+        ),
+      ),
       home: MyHomePage(),
     );
   }
@@ -58,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
         context: ctx,
         builder: (_) {
           return GestureDetector(
-            child:NewTransaction(_addNewTransaction),
+            child: NewTransaction(_addNewTransaction),
             onTap: () {},
             behavior: HitTestBehavior.opaque,
           );

@@ -23,13 +23,13 @@ class TransationList extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: Colors.purple,
+                      color: Theme.of(context).primaryColorDark,
                     ),
                   ),
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.purple,
+                      color: Theme.of(context).primaryColorDark,
                       width: 2,
                     ),
                   ),
@@ -42,7 +42,8 @@ class TransationList extends StatelessWidget {
                     Text(
                       tarnsactions[index].title,
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          // TextStyle(fontSize: 16, fontWeight: FontWeight.bold,),
+                        Theme.of(context).textTheme.title // ignore: deprecated_member_use
                     ),
                     Text(
                       DateFormat.yMMMEd().format(tarnsactions[index].date),
