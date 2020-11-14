@@ -1,12 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
-  final titlecon = TextEditingController();
-  final amtcon = TextEditingController();
-
+class NewTransaction extends StatefulWidget {
   final Function addTx;
 
   NewTransaction(this.addTx);
+
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titlecon = TextEditingController();
+
+  final amtcon = TextEditingController();
 
   void submitData() {
     final actualTitle = titlecon.text;
@@ -15,7 +22,9 @@ class NewTransaction extends StatelessWidget {
     if (actualTitle.isEmpty || actualAmount <= 0) {
       return;
     }
-    addTx(actualTitle, actualAmount);
+    widget.addTx(actualTitle, actualAmount);
+
+    Navigator.of(context).pop();
   }
 
   @override
