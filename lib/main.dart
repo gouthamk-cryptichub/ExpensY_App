@@ -1,6 +1,10 @@
-import 'package:ExpensY_APP/widgets/user_transactions.dart';
+import 'package:ExpensY_APP/widgets/trans_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import './widgets/new_transaction.dart';
+import './models/transaction.dart';
+import './widgets/trans_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,17 +18,60 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   // String titleInput;
   // String amtInput;
-  final titlecon = TextEditingController();
-  final amtcon = TextEditingController();
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final List<Transaction> _userTransactions = [
+    Transaction(
+      id: 'exp1',
+      title: 'T-shirt',
+      amt: 150,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 'exp2',
+      title: 'Shoes',
+      amt: 650,
+      date: DateTime.now(),
+    )
+  ];
+
+  void _addNewTransaction(String txTitle, num txAmount) {
+    final newTx = Transaction(
+        id: DateTime.now().toString(),
+        title: txTitle,
+        amt: txAmount,
+        date: DateTime.now());
+
+    setState(() {
+      _userTransactions.add(newTx);
+    });
+  }
+
+  void _openAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return NewTransaction(_addNewTransaction);
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('ExpensY'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _openAddNewTransaction(context),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -38,10 +85,15 @@ class MyHomePage extends StatelessWidget {
                 elevation: 5,
               ),
             ),
-            UserTransactions(),
+            TransationList(_userTransactions),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _openAddNewTransaction(context),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

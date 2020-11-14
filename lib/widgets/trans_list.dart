@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 
 class TransationList extends StatelessWidget {
-
   final List<Transaction> tarnsactions;
 
   TransationList(this.tarnsactions);
@@ -20,15 +19,14 @@ class TransationList extends StatelessWidget {
               children: [
                 Container(
                   child: Text(
-                    'Rs.' + tarnsactions[index].amt.toString(),
+                    '₹' + tarnsactions[index].amt.toStringAsPrecision(4),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Colors.purple,
                     ),
                   ),
-                  margin:
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.purple,
@@ -36,14 +34,15 @@ class TransationList extends StatelessWidget {
                     ),
                   ),
                   padding: EdgeInsets.all(10),
+                  width: 81,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       tarnsactions[index].title,
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       DateFormat.yMMMEd().format(tarnsactions[index].date),

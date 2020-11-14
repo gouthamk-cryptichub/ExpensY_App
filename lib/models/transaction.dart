@@ -6,9 +6,9 @@ class Transaction {
   final num amt;
   final DateTime date;
 
-  Transaction({
-    @required this.id,
-    @required this.title,
-    @required this.amt,
-    @required this.date});
+  Transaction(
+      {@required this.id,
+      @required this.title,
+      @required this.amt,
+      @required this.date});
 }
