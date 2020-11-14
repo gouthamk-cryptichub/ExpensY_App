@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import './widgets/new_transaction.dart';
 import './models/transaction.dart';
 import './widgets/trans_list.dart';
+import './widgets/chart.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,7 +21,10 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.deepPurple,
         fontFamily: 'QuickSand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(fontFamily: 'QuickSand', fontSize: 18, fontWeight: FontWeight.bold), // ignore: deprecated_member_use
+              title: TextStyle( // ignore: deprecated_member_use
+                  fontFamily: 'QuickSand',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold), // ignore: deprecated_member_use
             ),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
@@ -46,19 +50,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: 'exp1',
-      title: 'T-shirt',
-      amt: 150,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 'exp2',
-      title: 'Shoes',
-      amt: 650,
-      date: DateTime.now(),
-    )
+    // Transaction(
+    //   id: 'exp1',
+    //   title: 'T-shirt',
+    //   amt: 150,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 'exp2',
+    //   title: 'Shoes',
+    //   amt: 650,
+    //   date: DateTime.now(),
+    // )
   ];
+
+  List<Transaction> get _recentTxx {
+    return _userTransactions.where((elementTx) {
+      return elementTx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   void _addNewTransaction(String txTitle, num txAmount) {
     final newTx = Transaction(
@@ -100,14 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Text('BAR CHART'),
-                color: Colors.blue,
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTxx),
             TransationList(_userTransactions),
           ],
         ),
