@@ -34,7 +34,9 @@ class Chart extends StatelessWidget {
       elevation: 5,
       margin: EdgeInsets.all(20),
       child: Row(
-        children: [],
+        children: groupedTx.map((data) {
+          return Text('${data['day']}: ${data['amt']}');
+        }).toList(),
       ),
     );
   }
