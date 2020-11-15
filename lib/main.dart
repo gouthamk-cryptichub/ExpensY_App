@@ -2,13 +2,19 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart'; ###
 
 import './widgets/new_transaction.dart';
 import './models/transaction.dart';
 import './widgets/trans_list.dart';
 import './widgets/chart.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  // WidgetsFlutterBinding.ensureInitialized(); ###
+  // SystemChrome.setPreferredOrientations( ###
+  //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]); ###
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -21,6 +27,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'OpenSans',
         textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle( // ignore: deprecated_member_use
+                  // ignore: deprecated_member_use
                   fontFamily: 'QuickSand',
                   fontSize: 18,
                   fontWeight: FontWeight.bold), // ignore: deprecated_member_use
@@ -63,6 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // )
   ];
 
+  bool _switchVal = false;
+
   List<Transaction> get _recentTxx {
     return _userTransactions.where((elementTx) {
       return elementTx.date.isAfter(
@@ -99,28 +108,66 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void deleteTx(String id) {
     setState(() {
-      _userTransactions.removeWhere((element) => element.id ==id);
+      _userTransactions.removeWhere((element) => element.id == id);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
+    final _appbarWig = AppBar(
+      title: Text('ExpensY'),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _openAddNewTransaction(context),
+        ),
+      ],
+    );
+
+    final listWig = Container(
+      height: (MediaQuery.of(context).size.height -
+          _appbarWig.preferredSize.height -
+          MediaQuery.of(context).padding.top) *
+          0.67,
+      child: TransationList(_userTransactions, deleteTx),
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ExpensY'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _openAddNewTransaction(context),
-          ),
-        ],
-      ),
+      appBar: _appbarWig,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(_recentTxx),
-            TransationList(_userTransactions, deleteTx),
+            if (isLandscape) Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [Text('Show Chart'),
+                Switch(value: _switchVal, onChanged: (val) {
+                  setState(() {
+                    _switchVal = val;
+                  });
+
+                }),
+              ],
+            ),
+            if (!isLandscape) Container(
+              height: (MediaQuery.of(context).size.height -
+                  _appbarWig.preferredSize.height -
+                  MediaQuery.of(context).padding.top) *
+                  0.33,
+              child: Chart(_recentTxx),
+            ),
+            if (!isLandscape) listWig,
+            if (isLandscape) _switchVal
+            ? Container(
+              height: (MediaQuery.of(context).size.height -
+                      _appbarWig.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.67,
+              child: Chart(_recentTxx),
+            )
+            : listWig
           ],
         ),
       ),
