@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor: Colors.deepPurple,
+        errorColor:  Colors.red,
         fontFamily: 'OpenSans',
         textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle( // ignore: deprecated_member_use

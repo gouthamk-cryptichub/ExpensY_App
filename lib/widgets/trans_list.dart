@@ -12,26 +12,25 @@ class TransationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return transactions.isEmpty
-        ? LayoutBuilder(builder: (ctx, constraints){
-          return Column(
-            children: [
-              Text(
-                "No Transactions Yet!",
-                style: TextStyle(fontSize: 18, color: Colors.black45),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                  height: constraints.maxHeight * 0.6,
-                  child: Image.asset(
-                    'assets/images/waiting.png',
-                    fit: BoxFit.cover,
-                  )),
-            ],
-          );
-    }
-        )
+        ? LayoutBuilder(builder: (ctx, constraints) {
+            return Column(
+              children: [
+                Text(
+                  "No Transactions Yet!",
+                  style: TextStyle(fontSize: 18, color: Colors.black45),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Container(
+                    height: constraints.maxHeight * 0.6,
+                    child: Image.asset(
+                      'assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                    )),
+              ],
+            );
+          })
         : ListView.builder(
             // ignore: deprecated_member_use
             itemBuilder: (context, index) {
@@ -63,13 +62,23 @@ class TransationList extends StatelessWidget {
                     DateFormat.yMMMEd().format(transactions[index].date),
                     style: TextStyle(color: Colors.grey),
                   ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete_forever_rounded),
-                    color: Colors.grey,
-                    onPressed: () {
-                      delTx(transactions[index].id);
-                    },
-                  ),
+                  trailing: MediaQuery.of(context).orientation ==
+                          Orientation.landscape
+                      ? FlatButton.icon(
+                          onPressed: () {
+                            delTx(transactions[index].id);
+                          },
+                          icon: Icon(Icons.delete_forever_rounded),
+                          label: Text('DELETE'),
+                          textColor: Theme.of(context).errorColor,
+                        )
+                      : IconButton(
+                          icon: Icon(Icons.delete_forever_rounded),
+                          color: Colors.grey,
+                          onPressed: () {
+                            delTx(transactions[index].id);
+                          },
+                        ),
                 ),
               );
             },

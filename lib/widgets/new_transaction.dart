@@ -29,40 +29,52 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
-              // onChanged: (val) => titleInput = val,
-              controller: titlecon,
-              onSubmitted: (_) => submitData(),
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              // onChanged: (val) => amtInput = val,
-              controller: amtcon,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => submitData(),
-            ),
-            FlatButton(
-              onPressed: () {
-                // print(titleInput);
-                // print(amtInput);
-                // print(titlecon.text);
-                // print(amtcon.text);
-                submitData();
-              },
-              child: Text(
-                'ADD',
-                style: TextStyle(color: Colors.purple),
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+              left: 10,
+              top: 10,
+              right: 10,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                decoration: InputDecoration(labelText: 'Title'),
+                // onChanged: (val) => titleInput = val,
+                controller: titlecon,
+                onSubmitted: (_) => submitData(),
               ),
-            )
-          ],
+              TextField(
+                decoration: InputDecoration(labelText: 'Amount'),
+                // onChanged: (val) => amtInput = val,
+                controller: amtcon,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => submitData(),
+              ),
+              FlatButton(
+                onPressed: () {
+                  // print(titleInput);
+                  // print(amtInput);
+                  // print(titlecon.text);
+                  // print(amtcon.text);
+                  submitData();
+                },
+
+                child: Container(
+                  color: Theme.of(context).primaryColor,
+                  padding: EdgeInsets.all(7),
+                  child: Text(
+                    'Add Expense',
+                    style: TextStyle(color: Colors.white, letterSpacing: 1.2),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
