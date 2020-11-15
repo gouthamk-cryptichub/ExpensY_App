@@ -5,13 +5,14 @@ import '../models/transaction.dart';
 
 class TransationList extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function delTx;
 
-  TransationList(this.transactions);
+  TransationList(this.transactions, this.delTx);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 375,
+      height: 420,
       child: transactions.isEmpty
           ? Column(
               children: [
@@ -45,10 +46,9 @@ class TransationList extends StatelessWidget {
                           child: Text(
                             '₹' + transactions[index].amt.toString(),
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Colors.white),
                           ),
                         ),
                       ),
@@ -61,6 +61,13 @@ class TransationList extends StatelessWidget {
                     subtitle: Text(
                       DateFormat.yMMMEd().format(transactions[index].date),
                       style: TextStyle(color: Colors.grey),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete_forever_rounded),
+                      color: Colors.grey,
+                      onPressed: () {
+                        delTx(transactions[index].id);
+                      },
                     ),
                   ),
                 );

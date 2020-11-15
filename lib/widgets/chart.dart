@@ -27,7 +27,7 @@ class Chart extends StatelessWidget {
         'day': DateFormat.E().format(weekDay).substring(0, 1),
         'amt': totalTxDay
       };
-    });
+    }).reversed.toList();
   }
 
   double get totalSpent {
