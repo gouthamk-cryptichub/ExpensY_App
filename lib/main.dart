@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:ExpensY_APP/widgets/trans_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
