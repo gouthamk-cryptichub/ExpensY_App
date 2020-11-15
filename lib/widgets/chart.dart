@@ -1,4 +1,5 @@
 import 'package:ExpensY_APP/models/transaction.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import './chart_bar.dart';
@@ -43,13 +44,20 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 5,
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: groupedTx.map((data) {
-          return ChartBar(
-              data['day'],
-              data['amt'],
-              totalSpent == 0.0 ? 0 : (data['amt'] as num) / totalSpent);
-        }).toList(),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTx.map((data) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                  data['day'],
+                  data['amt'],
+                  totalSpent == 0.0 ? 0.0 : (data['amt'] as num) / totalSpent),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

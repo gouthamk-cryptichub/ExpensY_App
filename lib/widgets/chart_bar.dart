@@ -17,7 +17,7 @@ class ChartBar extends StatelessWidget {
           height: 2,
         ),
         Container(
-          height: 60,
+          height: 80,
           width: 10,
           child: Stack(
             alignment: AlignmentDirectional.bottomStart,
@@ -36,14 +36,16 @@ class ChartBar extends StatelessWidget {
                       color: Theme.of(context).primaryColorDark,
                       borderRadius: BorderRadius.circular(10)),
                 ),
-              )
+              ),
             ],
           ),
         ),
         SizedBox(
           height: 4,
-        ),Text('₹$spendAmt')
-        ,
+        ),
+        FittedBox(
+          child: Text('₹$spendAmt'),
+        ),
       ],
     );
   }
