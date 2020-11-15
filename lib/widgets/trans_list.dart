@@ -27,28 +27,28 @@ class TransationList extends StatelessWidget {
               // ignore: deprecated_member_use
               itemBuilder: (context, index) {
                 return Card(
+                  elevation: 3,
                   child: Row(
                     children: [
                       Container(
-                        child: Text(
-                          '₹' + transactions[index].amt.toStringAsPrecision(4),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Theme.of(context).primaryColorDark,
+                        child: CircleAvatar(radius: 30,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: FittedBox(
+                              child: Text(
+                                '₹' + transactions[index].amt.toString(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                         margin:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).primaryColorDark,
-                            width: 2,
-                          ),
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                         ),
-                        padding: EdgeInsets.all(10),
-                        width: 81,
-                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

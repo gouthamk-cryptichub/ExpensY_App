@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor: Colors.deepPurple,
-        fontFamily: 'QuickSand',
+        fontFamily: 'OpenSans',
         textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle( // ignore: deprecated_member_use
                   fontFamily: 'QuickSand',

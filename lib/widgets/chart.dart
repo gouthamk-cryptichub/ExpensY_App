@@ -23,8 +23,6 @@ class Chart extends StatelessWidget {
         }
       }
 
-      print(DateFormat.E().format(weekDay));
-      print(totalTxDay);
       return {
         'day': DateFormat.E().format(weekDay).substring(0, 1),
         'amt': totalTxDay
@@ -40,7 +38,6 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(groupedTx);
     return Card(
       elevation: 5,
       margin: EdgeInsets.all(20),
