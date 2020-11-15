@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +25,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor: Colors.deepPurple,
-        errorColor:  Colors.red,
+        errorColor: Colors.red,
         fontFamily: 'OpenSans',
         textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle( // ignore: deprecated_member_use
+              title: TextStyle(
+                  // ignore: deprecated_member_use
+                  // ignore: deprecated_member_use
                   // ignore: deprecated_member_use
                   fontFamily: 'QuickSand',
                   fontSize: 18,
@@ -113,70 +116,101 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  //begin...
+
   @override
   Widget build(BuildContext context) {
-
     final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
 
-    final _appbarWig = AppBar(
-      title: Text('ExpensY'),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _openAddNewTransaction(context),
-        ),
-      ],
-    );
+    final PreferredSizeWidget _appbarWig = Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: Text('ExpensY'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  child: Icon(CupertinoIcons.add),
+                  onTap: () => _openAddNewTransaction(context),
+                )
+              ],
+            ),
+          )
+        : AppBar(
+            title: Text('ExpensY'),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () => _openAddNewTransaction(context),
+              ),
+            ],
+          );
 
     final listWig = Container(
       height: (MediaQuery.of(context).size.height -
-          _appbarWig.preferredSize.height -
-          MediaQuery.of(context).padding.top) *
+              _appbarWig.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
           0.67,
       child: TransationList(_userTransactions, deleteTx),
     );
-    return Scaffold(
-      appBar: _appbarWig,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (isLandscape) Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [Text('Show Chart'),
-                Switch(value: _switchVal, onChanged: (val) {
-                  setState(() {
-                    _switchVal = val;
-                  });
 
-                }),
+    final pageBody = SafeArea(child:SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (isLandscape)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text('Show Chart', style: Theme.of(context).textTheme.title,),
+                Switch.adaptive(
+                    activeColor: Theme.of(context).accentColor,
+                    value: _switchVal,
+                    onChanged: (val) {
+                      setState(() {
+                        _switchVal = val;
+                      });
+                    }),
               ],
             ),
-            if (!isLandscape) Container(
-              height: (MediaQuery.of(context).size.height -
-                  _appbarWig.preferredSize.height -
-                  MediaQuery.of(context).padding.top) *
-                  0.33,
-              child: Chart(_recentTxx),
-            ),
-            if (!isLandscape) listWig,
-            if (isLandscape) _switchVal
-            ? Container(
+          if (!isLandscape)
+            Container(
               height: (MediaQuery.of(context).size.height -
                       _appbarWig.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.67,
+                  0.33,
               child: Chart(_recentTxx),
-            )
-            : listWig
-          ],
-        ),
+            ),
+          if (!isLandscape) listWig,
+          if (isLandscape)
+            _switchVal
+                ? Container(
+                    height: (MediaQuery.of(context).size.height -
+                            _appbarWig.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.67,
+                    child: Chart(_recentTxx),
+                  )
+                : listWig
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _openAddNewTransaction(context),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
+    ),);
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            child: pageBody,
+            navigationBar: _appbarWig,
+          )
+        : Scaffold(
+            appBar: _appbarWig,
+            body: pageBody,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () => _openAddNewTransaction(context),
+                  ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -34,10 +36,10 @@ class _NewTransactionState extends State<NewTransaction> {
         elevation: 5,
         child: Container(
           padding: EdgeInsets.only(
-              left: 10,
-              top: 10,
-              right: 10,
-              bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+            left: 10,
+            top: 5,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 5,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -55,24 +57,42 @@ class _NewTransactionState extends State<NewTransaction> {
                 keyboardType: TextInputType.number,
                 onSubmitted: (_) => submitData(),
               ),
-              FlatButton(
-                onPressed: () {
-                  // print(titleInput);
-                  // print(amtInput);
-                  // print(titlecon.text);
-                  // print(amtcon.text);
-                  submitData();
-                },
-
-                child: Container(
-                  color: Theme.of(context).primaryColor,
-                  padding: EdgeInsets.all(7),
-                  child: Text(
-                    'Add Expense',
-                    style: TextStyle(color: Colors.white, letterSpacing: 1.2),
-                  ),
-                ),
-              )
+              Platform.isIOS
+                  ? CupertinoButton(
+                color: Colors.blue,
+                      onPressed: () {
+                        // print(titleInput);
+                        // print(amtInput);
+                        // print(titlecon.text);
+                        // print(amtcon.text);
+                        submitData();
+                      },
+                      child: Container(
+                          color: Theme.of(context).primaryColor,
+                          padding: EdgeInsets.all(7),
+                          child: Text(
+                            'Add Expense',
+                            style: TextStyle(
+                                color: Colors.white, letterSpacing: 1.2),
+                          )))
+                  : FlatButton(
+                      onPressed: () {
+                        // print(titleInput);
+                        // print(amtInput);
+                        // print(titlecon.text);
+                        // print(amtcon.text);
+                        submitData();
+                      },
+                      child: Container(
+                        color: Theme.of(context).primaryColor,
+                        padding: EdgeInsets.all(7),
+                        child: Text(
+                          'Add Expense',
+                          style: TextStyle(
+                              color: Colors.white, letterSpacing: 1.2),
+                        ),
+                      ),
+                    )
             ],
           ),
         ),
