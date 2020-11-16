@@ -14,8 +14,30 @@ class NewTransaction extends StatefulWidget {
 
 class _NewTransactionState extends State<NewTransaction> {
   final titlecon = TextEditingController();
-
   final amtcon = TextEditingController();
+
+  _NewTransactionState() {
+    print('Constructor of _NewTansaction State');
+  }
+  // WIDGET LIFE CYCLE.............+++++++++++++++
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   print('initState NewTransation Widget');
+  // }
+  //
+  // @override
+  // void didUpdateWidget(covariant NewTransaction oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   print('didUpdateWidget()');
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   print('dispose()');
+  // }
+  //..............................++++++++++++++++
 
   void submitData() {
     final actualTitle = titlecon.text;
